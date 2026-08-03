@@ -404,7 +404,7 @@ void FileSystem::createDirectory(const Path & _path)
     FSEntry * entries = reinterpret_cast<FSEntry *>(buffer.data());
     for(int i = 0; i < 2; ++i)
     {
-        entries[i].mode = EM_READ | EM_WRITE | EM_EXECUTE | EM_DIRECTORY | EM_EXISTS;
+        entries[i].mode = EM_READ | EM_WRITE | EM_EXECUTE | EM_DIRECTORY | EM_EXISTS | EM_SYSTEM;
         entries[i].created = now;
         entries[i].modified = now;
         entries[i].name[0] = '.';
@@ -414,6 +414,30 @@ void FileSystem::createDirectory(const Path & _path)
     entries[1].name[1] = '.';
 
     writeFile(*parent_dir_entry_path, _path.filename(), buffer, true, nullptr);
+
+    std::optional<EntryPath> new_dir_entry_path = resolvePath(_path);
+    if(new_dir_entry_path.has_value())
+    {
+        std::optional<EntryPath> parent_path = resolvePath(_path.up());
+        uint32_t global_index = 0;
+        if(parent_path.has_value())
+        {
+            forEachEntry(parent_path->entry, [&](const EntryPath & sibling) -> bool {
+                if(sibling.address.cluster == new_dir_entry_path->address.cluster &&
+                   sibling.address.entry == new_dir_entry_path->address.entry)
+                    return false;
+                ++global_index;
+                return true;
+            });
+        }
+
+        QByteArray dir_buffer(mp_info->cluster_size, Qt::Uninitialized);
+        readCluster(new_dir_entry_path->entry.cluster(), false, dir_buffer.data());
+        FSEntry * dir_entries = reinterpret_cast<FSEntry *>(dir_buffer.data());
+        dir_entries[0].dir_entry = global_index;
+        writeCluster(new_dir_entry_path->entry.cluster(), false, dir_buffer.data());
+    }
+
     emit changed();
 }
 
@@ -496,11 +520,11 @@ bool FileSystem::allocEntry(const EntryPath & _parent, const EntryInfo & _entry)
 
     { // Creating a new entry
         FSEntry & new_entry = parent_free_entry.cluster_entries[parent_free_entry.entry_index];
-        new_entry.mode = EM_EXISTS | EM_READ | EM_WRITE;
+        new_entry.mode = EM_EXISTS | EM_READ | EM_WRITE | EM_EXECUTE | EM_SYSTEM;
         if(_entry.isDirectory())
-            new_entry.mode |= EM_DIRECTORY | EM_EXECUTE;
+            new_entry.mode |= EM_DIRECTORY;
         else
-            new_entry.mode |= EM_FILE;
+            new_entry.mode |= EM_FILE | EM_CLOSED;
         new_entry.length = _entry.length();
         new_entry.cluster = _entry.cluster();
         new_entry.created = new_entry.modified = DateTime::now();

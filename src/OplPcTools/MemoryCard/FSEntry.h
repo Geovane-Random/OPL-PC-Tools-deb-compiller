@@ -25,17 +25,19 @@ namespace MemoryCard {
 
 enum FSEntryMode : uint16_t
 {
-    EM_READ = 0x1,
-    EM_WRITE = 0x2,
-    EM_EXECUTE = 0x4,
-    EM_PROTECTED = 0x8,
-    EM_FILE = 0x10,
-    EM_DIRECTORY = 0x20,
-    EM_POCKETSTATION = 0x800,
-    EM_PLAYSTATION = 0x1000,
-    EM_HIDDEN = 0x2000,
-    EM_EXISTS = 0x8000,
-    EM_INVALID = 0xFFFF
+    EM_READ          = 0x0001,
+    EM_WRITE         = 0x0002,
+    EM_EXECUTE       = 0x0004,
+    EM_PROTECTED     = 0x0008,
+    EM_FILE          = 0x0010,
+    EM_DIRECTORY     = 0x0020,
+    EM_SYSTEM        = 0x0400,
+    EM_CLOSED        = 0x0080,
+    EM_POCKETSTATION = 0x0800,
+    EM_PLAYSTATION   = 0x1000,
+    EM_HIDDEN        = 0x2000,
+    EM_EXISTS        = 0x8000,
+    EM_INVALID       = 0xFFFF
 };
 
 struct __attribute__((packed)) FSEntry
