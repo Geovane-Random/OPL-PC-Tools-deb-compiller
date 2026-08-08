@@ -979,17 +979,17 @@
 <context>
     <name>OplPcTools::MemoryCard::FileSystem</name>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="554"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="564"/>
         <source>The entry name must not be empty</source>
         <translation>Имя записи не может быть пустым</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="559"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="569"/>
         <source>The entry name &quot;%1&quot; is too long, the maximum length is %2 bytes</source>
         <translation>Имя записи &quot;%1&quot; слишком длинное, максимальная длина: %2 байт</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="566"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="576"/>
         <source>The entry name must not contain following symbols: %1</source>
         <translation>Имя записи не должно содержать следующих символов: %1</translation>
     </message>
@@ -1900,7 +1900,7 @@ Want to skip it?</source>
         <translation>Запись не является файлом</translation>
     </message>
     <message>
-        <location filename="../MemoryCard/FileSystem.cpp" line="454"/>
+        <location filename="../MemoryCard/FileSystem.cpp" line="464"/>
         <source>The entry %1 in cluster %2 is not a directory</source>
         <translation>Запись %1 в кластере %2 не является каталогом</translation>
     </message>

@@ -207,6 +207,7 @@ private:
         const QByteArray & _data,
         bool _is_directory,
         FileTransferProgressTracker * _tracker);
+    uint32_t countEntries(const EntryPath & _parent);
     bool allocEntry(const EntryPath & _parent, const EntryInfo & _entry);
     void validateEntryName(const QByteArray & _name);
     void changeEntryLength(const EntryAddress & _address, int8_t _amount);
