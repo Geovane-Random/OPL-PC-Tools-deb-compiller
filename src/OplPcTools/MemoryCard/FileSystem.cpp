@@ -239,7 +239,7 @@ QList<EntryInfo> FileSystem::enumerateEntries(const Path & _path)
     if(entry_path.has_value())
     {
         forEachEntry(entry_path->entry, [&](const EntryPath & next_entry_path) -> bool {
-            if(next_entry_path.entry.name() != "." && next_entry_path.entry.name() != "..")
+            if(!next_entry_path.entry.isDotOrDotDot())
                 result << next_entry_path.entry;
             return true;
         });
@@ -665,7 +665,7 @@ void FileSystem::eraseEntriesRecursive(const EntryPath & _path)
     if(_path.entry.isDirectory())
     {
         forEachEntry(_path.entry, [this](const EntryPath & __child_path) -> bool {
-            if(__child_path.entry.name() != "." && __child_path.entry.name() != "..")
+            if(!__child_path.entry.isDotOrDotDot())
                 eraseEntriesRecursive(__child_path);
             return true;
         });

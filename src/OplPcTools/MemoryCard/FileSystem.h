@@ -95,6 +95,11 @@ public:
         return m_is_directory;
     }
 
+    bool isDotOrDotDot() const
+    {
+        return m_name == "." || m_name == "..";
+    }
+
     uint32_t cluster() const
     {
         return m_cluster;
