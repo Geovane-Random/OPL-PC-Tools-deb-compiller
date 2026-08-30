@@ -114,6 +114,8 @@ int VmcListWidget::VmcTreeModel::columnCount(const QModelIndex & _parent) const
 
 QVariant VmcListWidget::VmcTreeModel::data(const QModelIndex & _index, int _role) const
 {
+    if(!_index.isValid() || _index.row() >= Library::instance().vmcs().count())
+        return QVariant();
     const Vmc * vmc = Library::instance().vmcs()[_index.row()];
     switch(_index.column())
     {

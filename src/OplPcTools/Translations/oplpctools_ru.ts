@@ -1575,17 +1575,17 @@
 <context>
     <name>OplPcTools::UI::VmcListWidget</name>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="306"/>
+        <location filename="../UI/VmcListWidget.cpp" line="308"/>
         <source>Do not ask again</source>
         <translation>Больше не спрашивать</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="307"/>
+        <location filename="../UI/VmcListWidget.cpp" line="309"/>
         <source>Delete VMC</source>
         <translation>Удалить VMC</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="308"/>
+        <location filename="../UI/VmcListWidget.cpp" line="310"/>
         <source>Are you sure you want to delete this VMC?</source>
         <translation>Вы уверены, что хотите удалить эту VMC?</translation>
     </message>
@@ -1934,7 +1934,7 @@ Want to skip it?</source>
         <translation>Следующие символы запрещены</translation>
     </message>
     <message>
-        <location filename="../UI/VmcListWidget.cpp" line="145"/>
+        <location filename="../UI/VmcListWidget.cpp" line="147"/>
         <source>%1 MiB</source>
         <translation>%1 МиБ</translation>
     </message>

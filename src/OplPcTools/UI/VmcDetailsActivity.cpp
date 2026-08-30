@@ -678,7 +678,7 @@ void VmcDetailsActivity::createDirectory()
         {
             return;
         }
-        const MemoryCard::Path path = encodePath(mp_edit_fs_path->text()) + encodePath(dlg.currentFilename());
+        const MemoryCard::Path path(encodePath(mp_edit_fs_path->text()), encodePath(dlg.currentFilename()));
         if(mp_vmc_fs->entry(path))
         {
             throw ValidationException(
@@ -711,7 +711,7 @@ void VmcDetailsActivity::renameEntry()
                 tr("Unable to rename \"%1\" to \"%2\", a file or directory with the same name already exists")
                 .arg(prev_entry_name, dlg.currentFilename()));
         }
-        mp_vmc_fs->rename(encodePath(mp_edit_fs_path->text()) + entry->name(), new_name);
+        mp_vmc_fs->rename(MemoryCard::Path(encodePath(mp_edit_fs_path->text()), entry->name()), new_name);
     });
 }
 
