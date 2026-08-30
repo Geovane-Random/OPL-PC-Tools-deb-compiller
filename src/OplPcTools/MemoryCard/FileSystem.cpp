@@ -549,7 +549,8 @@ void FileSystem::validateEntryName(const QByteArray & _name)
     if(!isEntryNameValid(_name))
     {
         throw MemoryCardFileSystemException(
-            tr("The entry name must not contain following symbols: %1").arg(g_entry_name_forbidden_characters));
+            tr("The entry name must not contain following symbols: %1\n\n"
+               "Make sure you have selected the correct charset.").arg(g_entry_name_forbidden_characters));
     }
 }
 

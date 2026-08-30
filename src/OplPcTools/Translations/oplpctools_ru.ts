@@ -990,8 +990,16 @@
     </message>
     <message>
         <location filename="../MemoryCard/FileSystem.cpp" line="552"/>
+        <source>The entry name must not contain following symbols: %1
+
+Make sure you have selected the correct charset.</source>
+        <translation>Имя записи не должно содержать следующих символов: %1
+
+Убедитесь, что выбрана верная кодировка.</translation>
+    </message>
+    <message>
         <source>The entry name must not contain following symbols: %1</source>
-        <translation>Имя записи не должно содержать следующих символов: %1</translation>
+        <translation type="vanished">Имя записи не должно содержать следующих символов: %1</translation>
     </message>
 </context>
 <context>
