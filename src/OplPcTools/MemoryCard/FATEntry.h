@@ -30,41 +30,55 @@ enum FATEntryFlag : uint8_t
     FAT_POINTER = 0x80
 };
 
-struct __attribute__((packed)) FATEntry
+struct FATEntry
 {
-    uint32_t cluster: 24;
-    FATEntryFlag flag: 8;
+    uint8_t data[4];
 
     static constexpr FATEntry free()
     {
-        return { .cluster = 0xFFFFFF, .flag = FAT_FREE };
+        return { 0xFF, 0xFF, 0xFF, FAT_FREE };
     }
 
     static constexpr FATEntry endOfFile()
     {
-        return { .cluster = 0xFFFFFF, .flag = FAT_EOF };
+        return { 0xFF, 0xFF, 0xFF, FAT_EOF };
     }
 
     static constexpr FATEntry pointer(uint32_t _cluster)
     {
-        return { .cluster = _cluster, .flag = FAT_POINTER };
+        return
+        {
+            static_cast<uint8_t>(_cluster),
+            static_cast<uint8_t>(_cluster >> 8),
+            static_cast<uint8_t>(_cluster >> 16),
+            FAT_POINTER
+        };
     }
 
-    bool isFree() const
+    constexpr uint32_t cluster() const
     {
-        return flag == FAT_FREE;
+        return static_cast<uint32_t>(data[0]) |
+               (static_cast<uint32_t>(data[1]) << 8) |
+               (static_cast<uint32_t>(data[2]) << 16);
     }
 
-    bool isEndOfFile() const
+    constexpr bool isFree() const
     {
-        return flag == FAT_EOF;
+        return data[3] == FAT_FREE;
     }
 
-    bool isPointer() const
+    constexpr bool isEndOfFile() const
     {
-        return flag == FAT_POINTER;
+        return data[3] == FAT_EOF;
+    }
+
+    constexpr bool isPointer() const
+    {
+        return data[3] == FAT_POINTER;
     }
 };
+
+static_assert(sizeof(FATEntry) == 4, "A memory-card FAT entry must occupy exactly four bytes");
 
 } // namespace MemoryCard
 } // namespace OplPcTools

@@ -332,7 +332,7 @@ QList<uint32_t> FileSystem::getEntryClusters(const EntryInfo & _entry) const
         FATEntry fat_entry = m_fat[cluster];
         if(fat_entry.isEndOfFile())
             break;
-        cluster = fat_entry.cluster;
+        cluster = fat_entry.cluster();
     }
     return result;
 }
