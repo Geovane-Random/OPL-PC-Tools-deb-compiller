@@ -58,9 +58,17 @@ RUN apt-get update && \
 
 WORKDIR /qt
 
+# QtWayland sends xdg-toplevel icons as wl_shm ARGB8888 buffers, whose alpha
+# must be premultiplied. Qt 6.9.1 incorrectly creates a straight-alpha image.
 RUN git clone --branch v$QT_VERSION https://code.qt.io/qt/qt5.git && \
     cd qt5 && \
     ./init-repository --module-subset=qtbase,qtsvg,qttools,qttranslations,qtsystems,qtwayland,qtimageformats && \
+    sed -i \
+        's/QImage::Format_ARGB32,/QImage::Format_ARGB32_Premultiplied,/' \
+        qtwayland/src/plugins/shellintegration/xdg-shell/qwaylandxdgtopleveliconv1.cpp && \
+    grep -q \
+        'QImage::Format_ARGB32_Premultiplied' \
+        qtwayland/src/plugins/shellintegration/xdg-shell/qwaylandxdgtopleveliconv1.cpp && \
     mkdir build && \
     cd build && \
     ../configure \
